@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition;
 using System.Windows;
+using Topics.Radical.Windows.Presentation.Boot;
 using Topics.Radical.Windows.Presentation.ComponentModel;
 
 namespace Topics.Radical
@@ -13,11 +14,27 @@ namespace Topics.Radical
     public class ApplicationBootstrapper : Topics.Radical.Windows.Presentation.Boot.ApplicationBootstrapper
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.
+        /// 
         /// </summary>
-        public ApplicationBootstrapper()
+        /// <typeparam name="TShellType"></typeparam>
+        /// <returns></returns>
+        public static ApplicationBootstrapper Boot<TShellType>() where TShellType : Window
         {
-            this.UsingAsContainerBootstrapper(new Windows.Presentation.Boot.PuzzleContainerBootstrapper());
+            var bootstrapper = new ApplicationBootstrapper<TShellType>();
+            bootstrapper.UsingAsContainerBootstrapper(new PuzzleContainerBootstrapper());
+            return bootstrapper;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shellViewType"></param>
+        /// <returns></returns>
+        public static ApplicationBootstrapper Boot(Type shellViewType)
+        {
+            var bootstrapper = new ApplicationBootstrapper();
+            bootstrapper.UsingAsContainerBootstrapper(new PuzzleContainerBootstrapper());
+            return (ApplicationBootstrapper)bootstrapper.UsingAsShell(shellViewType);
         }
 
         /// <summary>
