@@ -15,5 +15,10 @@ namespace Topics.Radical.Windows.Presentation.ComponentModel
 		/// </summary>
 		/// <param name="component">The component to release.</param>
 		void Release( Object component );
+
+        /// <summary>
+        /// True if the underline container supports components disposing.
+        /// </summary>
+        bool SupportsDisposing { get; }
 	}
 }

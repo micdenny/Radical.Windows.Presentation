@@ -78,20 +78,26 @@ namespace Topics.Radical.Windows.Presentation.Services
                         }
 
                         this.releaser.Release(vm);
-                        var disposableViewModel = vm as IDisposable;
-                        if( disposableViewModel != null)
+                        if (!this.releaser.SupportsDisposing)
                         {
-                            disposableViewModel.Dispose();
+                            var disposableViewModel = vm as IDisposable;
+                            if (disposableViewModel != null)
+                            {
+                                disposableViewModel.Dispose();
+                            }
                         }
                     }
 
                     this.DetachViewBehaviors(view);
 
                     this.releaser.Release(view);
-                    var disposableView = view as IDisposable;
-                    if(disposableView != null)
+                    if (!this.releaser.SupportsDisposing)
                     {
-                        disposableView.Dispose();
+                        var disposableView = view as IDisposable;
+                        if (disposableView != null)
+                        {
+                            disposableView.Dispose();
+                        }
                     }
                 }
             };
